@@ -17,7 +17,9 @@ public class db {
         conn1.Conn();
         conn1.CreateDB();
 
-        conn1.update_type(4,"NAruto");
+        conn1.get_type(4);
+        conn1.get_type_where("type LIKE '%а%'");
+        conn1.get_all_types();
         conn1.CloseDB();
 
     }

@@ -122,6 +122,32 @@ public class conn1 {
 
         preparedStatement.close();
     }
+    public static void get_type(int id) throws SQLException{
+        set = statement.executeQuery("SELECT * FROM types WHERE id = " + id);
+        while (set.next()){
+            id = set.getInt("id");
+            String type = set.getString("type");
+            System.out.println("id = " + id + ", type = " + type);
+        }
+        System.out.println("все четко работает");
+    }
+    public static void get_type_where(String where) throws SQLException{
+        set = statement.executeQuery("SELECT * FROM types WHERE " + where);
+        while (set.next()){
+            int id = set.getInt("id");
+            String type = set.getString("type");
+            System.out.println("id = " + id + ", type = " + type);
+        }
+        System.out.println("Пошел наху все работает");
+    }
+    public static void get_all_types() throws SQLException{
+        set = statement.executeQuery("SELECT * FROM types");
+        while (set.next()){
+            int id = set.getInt("id");
+            String type = set.getString("type");
+            System.out.println("id = " + id + ", type = " + type);
+        }
+    }
 
 
 }
