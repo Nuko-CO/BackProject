@@ -16,9 +16,7 @@ public class db {
     public static void main(String[] args)throws ClassNotFoundException,SQLException  {
         conn1.Conn();
         conn1.CreateDB();
-        conn1.insert_type("Абиссинская кошка");
-        conn1.insert_type("Австралийский мист");
-        conn1.insert_type("Американская жесткошерстная");
+        conn1.InsertTypeToDatabase();
         conn1.CloseDB();
 
     }
