@@ -16,7 +16,8 @@ public class db {
     public static void main(String[] args)throws ClassNotFoundException,SQLException  {
         conn1.Conn();
         conn1.CreateDB();
-        conn1.InsertTypeToDatabase();
+
+        conn1.update_type(4,"NAruto");
         conn1.CloseDB();
 
     }

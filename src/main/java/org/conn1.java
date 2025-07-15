@@ -1,9 +1,6 @@
 package org;
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+
 public class conn1 {
     public static Connection conn;
     public static Statement statement;
@@ -103,7 +100,28 @@ public class conn1 {
             insert_type(type);
         }
     }
+    public static void delete_type(int id) throws SQLException {
+        statement = conn.createStatement();
+        statement.executeUpdate("DELETE FROM types WHERE id = " + id);
+        System.out.println("Удалено: id = " + id);
+    }
 
+    // Обновление записи по id
+    public static void update_type(int id, String new_type) throws SQLException {
+        String sql = "UPDATE types SET type = ? WHERE id = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setString(1, new_type);
+        preparedStatement.setInt(2, id);
+
+        int rowsAffected = preparedStatement.executeUpdate();
+        if (rowsAffected > 0) {
+            System.out.println("Обновлено: id = " + id + " на тип = " + new_type);
+        } else {
+            System.out.println("❗ Запись с id = " + id + " не найдена.");
+        }
+
+        preparedStatement.close();
+    }
 
 
 }
