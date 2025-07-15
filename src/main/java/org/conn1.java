@@ -15,11 +15,11 @@ public class conn1 {
     System.out.println("База подключена!");
 
     }
-    public static void CreateDB() throws SQLException{
-        statement =conn.createStatement();
-        statement.executeUpdate("DROP TABLE IF EXISTS types;");
-        statement.executeUpdate("CREATE TABLE types (" +
-                "id INT PRIMARY KEY, type VARCHAR(100) NOT NULL);");
+    public static void CreateDB() throws SQLException {
+        statement = conn.createStatement();
+        statement.executeUpdate("CREATE TABLE IF NOT EXISTS types (" +
+                "id SERIAL PRIMARY KEY, " +
+                "type VARCHAR(100) NOT NULL)");
         System.out.println("Таблица создана!");
     }
     public static void SetTable() throws SQLException{
@@ -30,4 +30,11 @@ public class conn1 {
         conn.close();
         System.out.println("ЗАкрылась дб");
     }
+    public static void  insert_type(String type) throws SQLException{
+        statement = conn.createStatement();
+        statement.executeUpdate("INSERT INTO types (type) VALUES ('" + type + "')");
+        System.out.println("Добавлено: " + type);
+    }
+
+
 }
