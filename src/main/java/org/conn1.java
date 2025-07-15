@@ -23,7 +23,7 @@ public class conn1 {
         System.out.println("Таблица создана!");
     }
     public static void SetTable() throws SQLException{
-
+        System.out.println("NAhui");
     }
     public static void CloseDB() throws SQLException{
         statement.close();
