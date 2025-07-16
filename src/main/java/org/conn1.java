@@ -533,5 +533,50 @@ public class conn1 {
             System.out.println("⚠️ Не найден кот с id = " + id + " по условию: " + where + " — ничего не обновлено.");
         }
     }
+    public static void get_cat(int id) throws SQLException{
+        set = statement.executeQuery("SELECT * FROM cats WHERE id = " + id);
+        boolean found = false;
+        while (set.next()){
+            found =true;
+            String name = set.getString("name");
+            int age = set.getInt("age");
+            double weight = set.getDouble("weight");
+            int typeid = set.getInt("type_id");
+            System.out.println("name - " + name + " age - " + age + " weigth - " + weight + " typeid - " + typeid);
+        }
+        if(!found){
+            System.out.println("Котик не найден.");
+        }
+    }
+    public static void get_cat_where (String where) throws  SQLException{
+        set = statement.executeQuery("SELECT * FROM cats WHERE " + where);
+        boolean found = false;
+        while (set.next()){
+            found = true;
+            String name = set.getString("name");
+            int age = set.getInt("age");
+            double weight = set.getDouble("weight");
+            int typeid = set.getInt("type_id");
+            System.out.println("name - " + name + " age - " + age + " weigth - " + weight + " typeid - " + typeid);
+        }
+        if(!found){
+            System.out.println("Котик не найден.");
+        }
+    }
+    public static void get_all_cats() throws SQLException{
+        set = statement.executeQuery("SELECT * FROM cats");
+        boolean found = false;
+        while (set.next()){
+            found = true;
+            String name = set.getString("name");
+            int age = set.getInt("age");
+            double weight = set.getDouble("weight");
+            int typeid = set.getInt("type_id");
+            System.out.println("name - " + name + " age - " + age + " weigth - " + weight + " typeid - " + typeid);
+        }
+        if(!found){
+            System.out.println("Котик не найден.");
+        }
+    }
 
 }

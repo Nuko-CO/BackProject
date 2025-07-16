@@ -17,8 +17,9 @@ public class db {
         conn1.Conn();
         conn1.CreateDB();
         conn1.createCatsTableIfNotExists();
-        conn1.alterCatsTable();
-        conn1.update_cat(7, "age = 5, weight = 4.2", "type_id = 45");;
+        conn1.get_cat(3); // Получить кота по id
+        conn1.get_cat_where("name LIKE '%а'"); // Коты, в имени которых есть 'а'
+        conn1.get_all_cats(); // Все котики
 
 
 
