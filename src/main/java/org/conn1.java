@@ -1,6 +1,6 @@
 package org;
 import java.sql.*;
-
+import java.sql.PreparedStatement;
 public class conn1 {
     public static Connection conn;
     public static Statement statement;
@@ -147,6 +147,99 @@ public class conn1 {
             String type = set.getString("type");
             System.out.println("id = " + id + ", type = " + type);
         }
+    }
+    public static void createCatsTableIfNotExists() throws SQLException {
+        String sql = "CREATE TABLE IF NOT EXISTS cats (" +
+                "id SERIAL PRIMARY KEY, " +
+                "name VARCHAR(100) NOT NULL, " +
+                "type_id INTEGER REFERENCES types(id), " +
+                "age INTEGER, " +
+                "weight DOUBLE PRECISION" +
+                ")";
+        statement = conn.createStatement();
+        statement.executeUpdate(sql);
+        System.out.println("Таблица cats создана (или уже существовала).");
+    }
+    public static void alterCatsTable() throws SQLException {
+        statement = conn.createStatement();
+        try {
+            statement.executeUpdate("ALTER TABLE cats ADD COLUMN age INTEGER");
+            System.out.println("Колонка 'age' добавлена.");
+        } catch (SQLException e) {
+            if (e.getMessage().contains("column \"age\" of relation \"cats\" already exists")) {
+                System.out.println("Колонка 'age' уже существует.");
+            } else {
+                throw e;
+            }
+        }
+
+        try {
+            statement.executeUpdate("ALTER TABLE cats ADD COLUMN weight DOUBLE PRECISION");
+            System.out.println("Колонка 'weight' добавлена.");
+        } catch (SQLException e) {
+            if (e.getMessage().contains("column \"weight\" of relation \"cats\" already exists")) {
+                System.out.println("Колонка 'weight' уже существует.");
+            } else {
+                throw e;
+            }
+        }
+    }
+   
+//    public static Integer getTypeId(String type) throws SQLException{
+//        String sql = "SELECT id FROM types WHERE type = ?";
+//        PreparedStatement ps = conn.prepareStatement(sql);
+//        ps.setString(1, type);
+//        ResultSet rs = ps.executeQuery();
+//        if (rs.next()) {
+//            return rs.getInt("id");
+//        }
+//        return null; // Типа нет
+//    }
+//    public static int insertTypeAndGetId(String type) throws SQLException {
+//        String insertSql = "INSERT INTO types (type) VALUES (?) RETURNING id";
+//        PreparedStatement ps = conn.prepareStatement(insertSql);
+//        ps.setString(1, type);
+//        ResultSet rs = ps.executeQuery();
+//        if (rs.next()) {
+//            return rs.getInt("id");
+//        } else {
+//            throw new SQLException("Не удалось добавить тип");
+//        }
+//    }
+//    public static void insert_cat(String name, String type, int age, Double weight) throws SQLException {
+//        Integer typeId = getTypeId(type);
+//
+//        if (typeId == null) {
+//            System.out.println("Тип " + type + " не найден. Добавляю...");
+//            typeId = insertTypeAndGetId(type);
+//        }
+//
+//        String sql = "INSERT INTO cats (name, type_id, age, weight) VALUES (?, ?, ?, ?)";
+//        PreparedStatement ps = conn.prepareStatement(sql);
+//        ps.setString(1, name);
+//        ps.setInt(2, typeId);
+//        ps.setInt(3, age);
+//        ps.setDouble(4, weight);
+//        ps.executeUpdate();
+//
+//        System.out.println("Кот добавлен: " + name + ", тип: " + type + ", возраст: " + age + ", вес: " + weight);
+//    }
+    public static void insert_cat(String name, String type, int age, Double weight) throws SQLException{
+        ResultSet rs = statement.executeQuery("SELECT id FROM types WHERE type = '" + type + "'");
+        Integer typeId = null;
+        if (rs.next()) {
+            typeId = rs.getInt("id");
+        }
+        if(typeId == null){
+            statement.executeUpdate("INSERT INTO types (type) VALUES ('" + type + "')");
+            ResultSet rs2 = statement.executeQuery("SELECT id FROM types WHERE type = '" + type + "'");
+            if (rs2.next()) {
+                typeId = rs2.getInt("id");
+            }
+        }
+        String sql = "INSERT INTO cats (name, type_id, age, weight) VALUES ('" + name + "', " + typeId + ", " + age + ", " + weight + ")";
+        statement.executeUpdate(sql);
+        System.out.println("Кот " + name + " добавлен.");
     }
 
 
