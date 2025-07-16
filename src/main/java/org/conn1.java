@@ -512,5 +512,26 @@ public class conn1 {
             "Аляска"
 
     };
+    public static void delete_cat(int id) throws SQLException {
+        statement = conn.createStatement();
+        statement.executeUpdate("DELETE FROM cats WHERE id = " + id);
+        System.out.println("Удалено: id = " + id);
+    }
+    public static void delete_cat(String where) throws SQLException{
+        statement = conn.createStatement();
+        statement.executeUpdate("DELETE FROM cats WHERE " + where);
+        System.out.println("FUCK you");
+    }
+    public static void update_cat(int id, String set, String where) throws SQLException {
+        statement = conn.createStatement();
+        String sql = "UPDATE cats SET " + set + " WHERE id = " + id + " AND " + where;
+        int rowsAffected = statement.executeUpdate(sql);
+
+        if (rowsAffected > 0) {
+            System.out.println("✅ Обновлён кот с id = " + id + " по условию: " + where);
+        } else {
+            System.out.println("⚠️ Не найден кот с id = " + id + " по условию: " + where + " — ничего не обновлено.");
+        }
+    }
 
 }

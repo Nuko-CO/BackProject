@@ -17,7 +17,8 @@ public class db {
         conn1.Conn();
         conn1.CreateDB();
         conn1.createCatsTableIfNotExists();
-        conn1.add_more_cats(5);
+        conn1.alterCatsTable();
+        conn1.update_cat(7, "age = 5, weight = 4.2", "type_id = 45");;
 
 
 
