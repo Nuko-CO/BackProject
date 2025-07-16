@@ -1,6 +1,10 @@
 package org;
 import java.sql.*;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class conn1 {
     public static Connection conn;
     public static Statement statement;
@@ -241,6 +245,272 @@ public class conn1 {
         statement.executeUpdate(sql);
         System.out.println("Кот " + name + " добавлен.");
     }
+    public static void add_more_cats(int n) throws SQLException {
+        // 1. Получаем все доступные type_id
+        List<Integer> typeIds = new ArrayList<>();
+        ResultSet rs = statement.executeQuery("SELECT id FROM types");
+        while (rs.next()) {
+            typeIds.add(rs.getInt("id"));
+        }
 
+        if (typeIds.isEmpty()) {
+            System.out.println("❗ Нет доступных типов кошек в таблице types.");
+            return;
+        }
+
+        Random random = new Random();
+
+        for (int i = 0; i < n; i++) {
+            String name = names[random.nextInt(names.length)];
+            int type_id = typeIds.get(random.nextInt(typeIds.size()));
+            int age = random.nextInt(20) + 1; // возраст 1–20
+            double weight = Math.round((2 + random.nextDouble() * 6) * 10.0) / 10.0; // вес 2–8 кг, округленный
+
+            String sql = "INSERT INTO cats (name, type_id, age, weight) VALUES ('" +
+                    name + "', " + type_id + ", " + age + ", " + weight + ")";
+            statement.executeUpdate(sql);
+        }
+
+        System.out.println("✅ Добавлено " + n + " случайных котиков.");
+    }
+    static String[] names = {"Гарфилд",
+
+            "Том",
+
+            "Гудвин",
+
+            "Рокки",
+
+            "Ленивец",
+
+            "Пушок",
+
+            "Спорти",
+
+            "Бегемот",
+
+            "Пират",
+
+            "Гудини",
+
+            "Зорро",
+
+            "Саймон",
+
+            "Альбус",
+
+            "Базилио",
+
+            "Леопольд",
+
+            "Нарцисс",
+
+            "Атос",
+
+            "Каспер",
+
+            "Валлито",
+
+            "Оксфорд",
+
+            "Бисквит",
+
+            "Соня",
+
+            "Клеопатра",
+
+            "Цунами",
+
+            "Забияка",
+
+            "Матильда",
+
+            "Кнопка",
+
+            "Масяня",
+
+            "Царапка",
+
+            "Серсея",
+
+            "Ворсинка",
+
+            "Амели",
+
+            "Наоми",
+
+            "Маркиза",
+
+            "Изольда",
+
+            "Вальс",
+
+            "Несквик",
+
+            "Златан",
+
+            "Баскет",
+
+            "Изюм",
+
+            "Цукат",
+
+            "Мокко",
+
+            "Месси",
+
+            "Кокос",
+
+            "Адидас",
+
+            "Бейлиз",
+
+            "Тайгер",
+
+            "Зефир",
+
+            "Мохи",
+
+            "Валенсия",
+
+            "Баунти",
+
+            "Свити",
+
+            "Текила",
+
+            "Ириска",
+
+            "Карамель",
+
+            "Виски",
+
+            "Кукуруза",
+
+            "Гренка",
+
+            "Фасолька",
+
+            "Льдинка",
+
+            "Китана",
+
+            "Офелия",
+
+            "Дайкири",
+
+            "Брусника",
+
+            "Аватар",
+
+            "Космос",
+
+            "Призрак",
+
+            "Изумруд",
+
+            "Плинтус",
+
+            "Яндекс",
+
+            "Крисмас",
+
+            "Метеор",
+
+            "Оптимус",
+
+            "Смайлик",
+
+            "Цельсий",
+
+            "Краска",
+
+            "Дейзи",
+
+            "Пенка",
+
+            "Веста",
+
+            "Астра",
+
+            "Эйприл",
+
+            "Среда",
+
+            "Бусинка",
+
+            "Гайка",
+
+            "Елка",
+
+            "Золушка",
+
+            "Мята",
+
+            "Радость",
+
+            "Сиам",
+
+            "Оскар",
+
+            "Феликс",
+
+            "Гарри",
+
+            "Байрон",
+
+            "Чарли",
+
+            "Симба",
+
+            "Тао",
+
+            "Абу",
+
+            "Ватсон",
+
+            "Енисей",
+
+            "Измир",
+
+            "Кайзер",
+
+            "Васаби",
+
+            "Байкал",
+
+            "Багира",
+
+            "Айрис",
+
+            "Диана",
+
+            "Мими",
+
+            "Сакура",
+
+            "Индия",
+
+            "Тиффани",
+
+            "Скарлетт",
+
+            "Пикси",
+
+            "Лиззи",
+
+            "Алиса",
+
+            "Лило",
+
+            "Ямайка",
+
+            "Пэрис",
+
+            "Мальта",
+
+            "Аляска"
+
+    };
 
 }
